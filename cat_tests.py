@@ -1,36 +1,34 @@
 import requests
+from collections import Counter
 
 class APIError(Exception):
     pass
 
 class CatFactProcessor:
-    def __init__(self, num_facts=5):
-        self.num_facts = num_facts
-        self.facts = []
+    def __init__(self):
+        self.last_fact = ""
 
     def get_fact(self):
         try:
             response = requests.get("https://catfact.ninja/fact")
+            response.raise_for_status()
             data = response.json()
-            fact = data["fact"]
-            self.facts.append(fact)
-            return fact
+            self.last_fact = data["fact"]
+            return self.last_fact
         except requests.exceptions.RequestException as e:
-            raise APIError(f"Error request for API: {e}")
+            raise APIError(f"Error request for API: {e}") from e
 
-    def get_fact_length(self):
-        if not self.facts:
-            return 0
-        return len(self.facts[-1])
-
-    def get_stats(self):
-        if not self.facts:
-            return {"average": 0, "min": 0, "max": 0}
-
-        lengths = [len(fact) for fact in self.facts[-self.num_facts:]]
+    def get_fact_analysis(self):
+        if not self.last_fact:
+            return {"length": 0, "letter_frequencies": {}}
+        fact_length = len(self.last_fact)
+        letter_frequencies = dict(Counter(self.last_fact.lower()))
         return {
-        "average": sum(lengths) / len(lengths) if lengths else 0,
-        "min": min(lengths) if lengths else 0,
-        "max": max(lengths) if lengths else 0,
+            "length": fact_length,
+            "letter_frequencies": letter_frequencies,
         }
 
+cat1 = CatFactProcessor()
+
+print(cat1.get_fact())
+print(cat1.get_fact_analysis())
