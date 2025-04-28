@@ -10,8 +10,11 @@ services:
     ports:
       - "3305:3306"
     volumes:
-      - ./scheme_create.sql:/var/lib/mysql-files/scheme_create.sql
+      - ./data_files/scheme_create.sql:/var/lib/mysql-files/scheme_create.sql
       - ./data_files/logs_data.csv:/var/lib/mysql-files/logs_data.csv
+      - ./data_files/messages_data.csv:/var/lib/mysql-files/messages_data.csv
+      - ./data_files/theme_data.csv:/var/lib/mysql-files/theme_data.csv
+      - ./data_files/user_data.csv:/var/lib/mysql-files/user_data.csv
 
 #docker-compose up -d
 #mysql -u root -p
