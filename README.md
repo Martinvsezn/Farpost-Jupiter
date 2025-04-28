@@ -11,7 +11,7 @@ Mysql поднималась через докер, на котором, при 
 
 После успешной установки и регистрации, заходим в Jenkins через адрес http://localhost:8080. Логинимся и создаём новый item.
 
-<img src="/Task_2/Jenkins_menu.png" alt="Меню Дженкинса" width="400" height="210">
+<img src="/Task_2/Jenkins_menu.PNG" alt="Меню Дженкинса" width="400" height="210">
 
 
 Вводим имя item'а и выбираем тип _Pipeline_. В настройках item'a можно поставить галочку напротив GitHub Project. 
